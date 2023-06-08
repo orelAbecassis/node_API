@@ -1,5 +1,3 @@
-
-
 // const dotenv = require('dotenv');
 // dotenv.config();
 
@@ -9,9 +7,7 @@
 // const port = process.env.PORT;
 const dotenv = require('dotenv');
 const express = require('express');
-
-// const produitRoute = require('./routes/produits');
-
+const produitRoute = require('./routes/produits');
 
 dotenv.config();
 
@@ -19,14 +15,15 @@ const server = express();
 server.use(express.json());
 server.set('json spaces', 2);
 
-// serverJson.use('/api/v1', produitRoute);
-// serverJson.use('/api/v1/livre', livreRoute);
+server.use('/api/v1/produits', produitRoute);
 
+server.get('/', (req, res) => {
+    res.send('Hello, World!');
+});
 
 const port = Number(process.env.PORT || 8081);
-console.log(`Your port is ${port}`);
-server.listen(port)
+server.listen(port, () => {
+    console.log(`Your port is ${port}`);
+});
 
-module.exports = server;
-
-
+module.exports=server;

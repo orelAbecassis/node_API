@@ -15,11 +15,22 @@ dotenv.config(); // Initialisation des variables d'environnements
 // Paramètres de connexion à la BDD
 // ----------------------------------------------
 const databaseConnection = mysql.createConnection({
-    host: process.env.HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_DATABASE
+    host: 'localhost',
+    port: 3306,
+    user: 'root',
+    password: '',
+    database: 'blognode'
 });
+// ----------------------------------------------
+// Connexion à la base de données
+// ----------------------------------------------
+databaseConnection.connect((err) => {
+    if (err) {
+        console.error('Erreur lors de la connexion à la base de données :', err.message);
+    } else {
+        console.log('Connexion à la base de données réussie !');
+    }
+})
 
 
 // ----------------------------------------------

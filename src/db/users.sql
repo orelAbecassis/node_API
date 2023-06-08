@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS tes;
-CREATE DATABASE IF NOT EXISTS test;
-USE test;
+DROP DATABASE IF EXISTS blognode;
+CREATE DATABASE IF NOT EXISTS blognode;
+USE blognode;
 
 DROP TABLE IF EXISTS clients;
 
@@ -12,6 +12,6 @@ CREATE TABLE IF NOT EXISTS clients
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(100) UNIQUE NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
-    role EMUN('Admin', 'SuperUser') DEFAULT 'SuperUser',
+    role  EMUN('Admin', 'SuperUser') DEFAULT 'SuperUser',
     age INT(11) DEFAULT 0
-);
+    );
