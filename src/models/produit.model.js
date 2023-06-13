@@ -1,33 +1,219 @@
+// ----------------------------------------------
+// Importation de la connexion à la bdd
+// ----------------------------------------------
 const dataBase = require('../db/db-connect');
+// const {deleteProduitId} = require("../routes/produits");
 
 
-const mongoose = require('mongoose');
+// ----------------------------------------------
+// Création d'un constructeur pour la création et la mise à jour des enregistrements
+// ----------------------------------------------
+const ProduitConstructor = function (produit) {
+    this.id_categ = produit.id_categ;
+    this.nom_produit = produit.nom_produit;
+    this.prix = produit.prix;
+    this.legende = produit.legende;
+    this.image = produit.image;
 
-const thingSchema = mongoose.Schema({
-    titre: {type: String, required: true},
-    nom_produit: {type: String, required: true},
-    prix: {type: Number, required: true},
-    legende: {type: String, required: true},
-    image: {type: String, required: true},
+};
 
-});
+// ----------------------------------------------
+// Récupérer l'enssembles des animes
+// ----------------------------------------------
+getAllProduits = result_bdd_request => {
+    dataBase.query("SELECT p.*, c.nom_categ\n" +
+        "FROM produits AS p\n" +
+        "INNER JOIN categories AS c ON p.nom_categ = c.id_categ;\n", (error, response) => {
+        if (error) {
+            result_bdd_request(error);
+        }
+        // Le premier null représente les erreurs
+        result_bdd_request(null, response);
+    });
+};
 
 
-// const ProduitConstructor = function (produit){
-//     this.id_produit = produit.id_produit;
-//     this.nom_produit = produit.nom_produit;
-//     this.prix = produit.prix;
-//     this.legende = produit.legende;
-//     this.image = produit.image;
-// };
+// ----------------------------------------------
+// Récupérer un anime par son ID
+// ----------------------------------------------
+getProduitId = (ID, result_bdd_request) => {
+    const query = 'SELECT p.*, c.nom_categ ' +
+        'FROM produits AS p ' +
+        'INNER JOIN categories AS c ON p.nom_categ = c.id_categ ' +
+        'WHERE p.id = ?';
+
+    dataBase.query(query, [ID], (error, response) => {
+        if (error) {
+            result_bdd_request(error);
+            return;
+        }
+
+        if (response.length) {
+            result_bdd_request(null, response);
+        } else {
+            result_bdd_request({ kind: "index_not_found" });
+        }
+    });
+};
+
+
+
+// ----------------------------------------------
+// Récupérer un anime par son nom
+// ----------------------------------------------
+const getProduitName = (selectedName, result_bdd_request) => {
+    const query = `SELECT p.*, c.nom_categ
+                    FROM produits AS p
+                    INNER JOIN categories AS c ON p.nom_categ = c.id_categ
+                    WHERE p.nom = ?`;
+
+    dataBase.query(query, [selectedName], (error, response) => {
+        if (error) {
+            result_bdd_request(error);
+        } else if (response.length) {
+            result_bdd_request(null, response);
+        } else {
+            result_bdd_request({ kind: "name_not_found" });
+        }
+    });
+};
+
+
+
+
+// ----------------------------------------------
+// Créer un nouvel enregistrement en BDD
+// ----------------------------------------------
+
+createProduit = (nouveauProduit, result_bdd_request) => {
+    const {nom_produit, prix, legende, image, nom_categ } = nouveauProduit;
+    let query;
+    let values;
+
+    if (nom_categ) {
+    query = `INSERT INTO produits (nom, prix, legende, image, nom_categ) VALUES (?, ?,?,?, ?)`;
+        values = [nom_produit, prix, legende, image, nom_categ];
+    } else {
+        query = `INSERT INTO produits (nom, prix, legende, image) VALUES (?, ?,?,?)`;
+        values = [nom_produit, prix, legende, image];
+    }
+    dataBase.query(query, values, (error, response) => {
+        if (error) {
+            result_bdd_request(error);
+        } else {
+            result_bdd_request(null, response.insertId);
+        }
+    });
+};
+
+// createLivre = (nouveauLivre, result_bdd_request) => {
+//     const { titre, description, idAuthor } = nouveauLivre;
+//     let query;
+//     let values;
 //
-// getAllProduits = result_bdd_request =>{
-//     dataBase.query("SELECT * FROM produits", (error, response)=>{
-//         if(error){
-//             result_bdd_request(error)
+//     if (idAuthor) {
+//         query = "INSERT INTO livre (titre, description, idAuthor) VALUES (?, ?, ?)";
+//         values = [titre, description, idAuthor];
+//     } else {
+//         query = "INSERT INTO livre (titre, description) VALUES (?, ?)";
+//         values = [titre, description];
+//     }
+//
+//     dataBase.query(query, values, (error, response) => {
+//         if (error) {
+//             result_bdd_request(error);
+//         } else {
+//             result_bdd_request(null, response.insertId);
 //         }
-//         result_bdd_request(null, response);
 //     });
 // };
 
-module.exports = { getAllProduits};
+
+
+// const result_bdd_request = (error, response) => {
+//     if (error) {
+//         console.error(error);
+//     } else {
+//         console.log(response);
+//     }
+// };
+
+// createProduit = (nouveauProduit, result_bdd_request) => {
+//     const {productName, prix, legende, image, categoryName } = nouveauProduit;
+//     const query = `INSERT INTO produits (nom, prix, legende, image, nom_categ) VALUES (?, ?,?,?, ?)`;
+//     dataBase.query(query, [productName, prix, legende, image, categoryName], (error, response) => {
+//         if (error) {
+//             result_bdd_request(error);
+//         } else {
+//             result_bdd_request(null, response.insertId);
+//         }
+//     });
+// };
+// const createProduit = (productName, prix, legende, image, categoryName, result_bdd_request) => {
+//     const query = `INSERT INTO produits (nom, prix, legende, image, nom_categ) VALUES (?, ?,?,?, ?)`;
+//
+//     dataBase.query(query, [productName, prix, legende, image, categoryName], (error, response) => {
+//         if (error) {
+//             result_bdd_request(error);
+//         } else {
+//             result_bdd_request(null, response);
+//         }
+//     });
+// };
+
+// createAnimeInStudioAnimation = (linkID, uniqueID, result_bdd_request) => {
+//     dataBase.query(`INSERT INTO studio_animation_anime set studio_animation_id = ${linkID}, anime_id = ${uniqueID}`,
+//         (error, response) => {
+//             if (error) {
+//                 result_bdd_request(error);
+//             }
+//             result_bdd_request(null);
+//         });
+// };
+
+
+// ----------------------------------------------
+// Mettre à jour un anime par son ID
+// ----------------------------------------------
+const updateProduitId = (produitId, updatedData, result_bdd_request) => {
+    const query = `UPDATE produits SET ? WHERE id = ?`;
+
+    dataBase.query(query, [updatedData, produitId], (error, response) => {
+        if (error) {
+            result_bdd_request(error);
+        } else if (response.affectedRows === 0) {
+            result_bdd_request({ kind: "id_not_found" });
+        } else {
+            result_bdd_request(null, response);
+        }
+    });
+};
+
+
+
+// ----------------------------------------------
+// Supprimer un anime par son ID
+// ----------------------------------------------
+deleteProduitId = (selectedID, result_bdd_request) => {
+    dataBase.query(`DELETE FROM produits
+                    WHERE id = ${selectedID}`, (error, response) => {
+        if (error) {
+            result_bdd_request(error);
+        } else if (response.affectedRows === 0) {
+            result_bdd_request({ kind: "index_not_found" });
+        } else {
+            result_bdd_request(null, response);
+        }
+    });
+};
+
+
+module.exports = {
+    ProduitConstructor,
+    getAllProduits,
+    getProduitId,
+    getProduitName,
+    createProduit,
+    updateProduitId,
+    deleteProduitId,
+};

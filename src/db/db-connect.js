@@ -19,7 +19,7 @@ const databaseConnection = mysql.createConnection({
     port: 3306,
     user: 'root',
     password: '',
-    database: 'blognode'
+    database: 'blog1'
 });
 // ----------------------------------------------
 // Connexion à la base de données
