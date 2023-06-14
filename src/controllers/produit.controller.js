@@ -1,3 +1,6 @@
+// ----------------------------------------------
+// Fonction pour récupérer tous les produits
+// ----------------------------------------------
 
 const ProduitModel = require('../models/produit.model');
 
@@ -9,54 +12,36 @@ getAllProduits = (request, response) => {
                     error.message || "Une erreur est survenue en essayant de récupérer la table produit."
             });
         else {
-
             response.send(data);
         }
     });
 };
 
+// ----------------------------------------------
+// Fonction pour récupérer un produit par son ID
+// ----------------------------------------------
 
 getProduitId = (request, response) => {
     ProduitModel.getProduitId(request.params.id, (error, data) => {
         if (error) {
             if (error.kind === "index_not_found") {
                 response.status(404).send({
-                    message: `L'id ${request.params.id} de la table produit n'a pas était trouvé.`
+                    message: `L'id ${request.params.id} de la table produit n'a pas été trouvé.`
                 });
             } else {
                 response.status(500).send({
-                    message: `L'id ${request.params.id} de la table produit n'a pas était trouvé.`
+                    message: `Une erreur est survenue lors de la récupération du produit avec l'id ${request.params.id}.`
                 });
             }
         } else {
-
             response.send(data);
         }
     });
 };
 
-
-// getProduitName = (request, response) => {
-//     ProduitModel.getProduitName(request.params.nom, (error, data) => {
-//         if (error) {
-//             if (error.kind === "name_not_found") {
-//                 response.status(404).send({
-//                     message: `${request.params.nom} n'a pas était trouvé. Les espaces sont possibles et une majuscule à chaque mot est nécéssaire ! exemple : */filter/One Piece`
-//                 });
-//             } else {
-//                 response.status(500).send({
-//                     message: `${request.params.nom} n'a pas était trouvé. Les espaces sont possibles et une majuscule à chaque mot est nécéssaire ! exemple : */filter/One Piece`
-//                 });
-//             }
-//         } else {
-//             data = utils.removeMultipleIdenticalObject(data);
-//             data = utils.specifyPath(data);
-//             response.send(data);
-//         }
-//     });
-// };
-//
-
+// ----------------------------------------------
+// Fonction pour créer un nouveau produit
+// ----------------------------------------------
 
 const createProduit = (req, res) => {
     const nouveauProduit = {
@@ -64,13 +49,13 @@ const createProduit = (req, res) => {
         prix: req.body.prix,
         legende: req.body.legende,
         image: req.body.image,
-        nom_categ : req.body.nom_categ
+        nom_categ: req.body.nom_categ
     };
 
     ProduitModel.createProduit(nouveauProduit, (error, produitId) => {
         if (error) {
             res.status(500).send({
-                message: error.message || "Une erreur est survenue lors de la création du livre"
+                message: error.message || "Une erreur est survenue lors de la création du produit."
             });
         } else {
             res.send({ id: produitId, ...nouveauProduit });
@@ -78,6 +63,9 @@ const createProduit = (req, res) => {
     });
 };
 
+// ----------------------------------------------
+// Fonction pour mettre à jour un produit par son ID
+// ----------------------------------------------
 
 updateProduitId = (req, res) => {
     const produitId = req.params.id;
@@ -86,33 +74,37 @@ updateProduitId = (req, res) => {
         prix: req.body.prix,
         legende: req.body.legende,
         image: req.body.image,
-        id_categ : req.body.id_categ
+        id_categ: req.body.id_categ
     };
 
     ProduitModel.updateProduitId(produitId, nouveauProduit, (error, rowsAffected) => {
         if (error) {
             res.status(500).send({
-                message: error.message || "Une erreur est survenue lors de la mise à jour du produit"
+                message: error.message || "Une erreur est survenue lors de la mise à jour du produit."
             });
         } else {
             if (rowsAffected > 0) {
                 res.send({ id: produitId, ...nouveauProduit });
             } else {
                 res.status(404).send({
-                    message: "Livre non trouvé"
+                    message: "Produit non trouvé."
                 });
             }
         }
     });
 };
 
- const deleteProduitId = (req, res) => {
+// ----------------------------------------------
+// Fonction pour supprimer un produit par son ID
+// ----------------------------------------------
+
+const deleteProduitId = (req, res) => {
     const produitId = req.params.id;
 
-     ProduitModel.deleteProduitId(produitId, (error, rowsAffected) => {
+    ProduitModel.deleteProduitId(produitId, (error, rowsAffected) => {
         if (error) {
             res.status(500).send({
-                message: error.message || "Une erreur est survenue lors de la suppression du produit"
+                message: error.message || "Une erreur est survenue lors de la suppression du produit."
             });
         } else {
             if (rowsAffected >= 0) {
@@ -126,6 +118,9 @@ updateProduitId = (req, res) => {
     });
 };
 
+// ----------------------------------------------
+// Export des fonctions du contrôleur
+// ----------------------------------------------
 
 
 

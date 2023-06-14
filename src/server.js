@@ -1,4 +1,6 @@
-
+// ----------------------------------------------
+// Importation des modules
+// ----------------------------------------------
 const dotenv = require('dotenv');
 const express = require('express');
 

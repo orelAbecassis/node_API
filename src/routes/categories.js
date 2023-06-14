@@ -9,7 +9,6 @@ const {
     deleteCategorie
 
 } = require('../controllers/categorie.controller');
-const {getCategorieId} = require("../models/categorie.model");
 
 
 /**

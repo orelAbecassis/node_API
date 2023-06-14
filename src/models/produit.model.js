@@ -91,7 +91,7 @@ createProduit = (nouveauProduit, result_bdd_request) => {
     let values;
 
     if (nom_categ) {
-    query = `INSERT INTO produits (nom, prix, legende, image, nom_categ) VALUES (?, ?,?,?, ?)`;
+        query = `INSERT INTO produits (nom, prix, legende, image, nom_categ) VALUES (?, ?,?,?, ?)`;
         values = [nom_produit, prix, legende, image, nom_categ];
     } else {
         query = `INSERT INTO produits (nom, prix, legende, image) VALUES (?, ?,?,?)`;
@@ -106,70 +106,7 @@ createProduit = (nouveauProduit, result_bdd_request) => {
     });
 };
 
-// createLivre = (nouveauLivre, result_bdd_request) => {
-//     const { titre, description, idAuthor } = nouveauLivre;
-//     let query;
-//     let values;
-//
-//     if (idAuthor) {
-//         query = "INSERT INTO livre (titre, description, idAuthor) VALUES (?, ?, ?)";
-//         values = [titre, description, idAuthor];
-//     } else {
-//         query = "INSERT INTO livre (titre, description) VALUES (?, ?)";
-//         values = [titre, description];
-//     }
-//
-//     dataBase.query(query, values, (error, response) => {
-//         if (error) {
-//             result_bdd_request(error);
-//         } else {
-//             result_bdd_request(null, response.insertId);
-//         }
-//     });
-// };
 
-
-
-// const result_bdd_request = (error, response) => {
-//     if (error) {
-//         console.error(error);
-//     } else {
-//         console.log(response);
-//     }
-// };
-
-// createProduit = (nouveauProduit, result_bdd_request) => {
-//     const {productName, prix, legende, image, categoryName } = nouveauProduit;
-//     const query = `INSERT INTO produits (nom, prix, legende, image, nom_categ) VALUES (?, ?,?,?, ?)`;
-//     dataBase.query(query, [productName, prix, legende, image, categoryName], (error, response) => {
-//         if (error) {
-//             result_bdd_request(error);
-//         } else {
-//             result_bdd_request(null, response.insertId);
-//         }
-//     });
-// };
-// const createProduit = (productName, prix, legende, image, categoryName, result_bdd_request) => {
-//     const query = `INSERT INTO produits (nom, prix, legende, image, nom_categ) VALUES (?, ?,?,?, ?)`;
-//
-//     dataBase.query(query, [productName, prix, legende, image, categoryName], (error, response) => {
-//         if (error) {
-//             result_bdd_request(error);
-//         } else {
-//             result_bdd_request(null, response);
-//         }
-//     });
-// };
-
-// createAnimeInStudioAnimation = (linkID, uniqueID, result_bdd_request) => {
-//     dataBase.query(`INSERT INTO studio_animation_anime set studio_animation_id = ${linkID}, anime_id = ${uniqueID}`,
-//         (error, response) => {
-//             if (error) {
-//                 result_bdd_request(error);
-//             }
-//             result_bdd_request(null);
-//         });
-// };
 
 
 // ----------------------------------------------
