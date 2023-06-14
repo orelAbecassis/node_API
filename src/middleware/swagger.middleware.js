@@ -1,55 +1,118 @@
 // ----------------------------------------------
 // Importation de la lib pour générer le json swagger
 // ----------------------------------------------
-const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerJsdoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+
 
 
 // ----------------------------------------------
 // Définition de l'architecture de base de la documentation
 // ----------------------------------------------
-const swaggerGeneration = {
+const options = {
     swaggerDefinition: {
         openapi: "3.0.0",
         info: {
-            title: 'DeliceDeTata',
-            version: '0.1.0'
+            title: "Les Délices de Tata",
+            version: "0.1.0",
+            description: "Documentation node js",
+
         },
         servers: [
             {
                 url: "http://localhost:8081/api/v1",
             },
         ],
+        components: {
+            schemas: {
+                Produit: {
+                    type: "object",
+                    properties: {
+                        id: {
+                            type: "integer",
+                        },
+                        nom: {
+                            type: "string",
+                        },
+                        prix: {
+                            type: "integer",
+                        },
+                        legende: {
+                            type: "string" ,
+                        },
+                        image: {
+                            type: "string" ,
+                        },
+                        id_categ: {
+                            type: "integer" ,
+                        },
+                    },
+                },
+                ProduitInput: {
+                    type: "object",
+                    properties: {
+                        nom: {
+                            type: "string",
+                        },
+                        prix: {
+                            type: "integer",
+                        },
+                        legende: {
+                            type: "string" ,
+                        },
+                        image: {
+                            type: "string" ,
+                        },
+                        id_categ: {
+                            type: "integer" ,
+                        },
+                    },
+                    required: ["nom", "prix", "legende","image","id_categ"], // Indiquez les propriétés requises
+                },
+                Categorie: {
+                    type: "object",
+                    properties: {
+                        id: {
+                            type: "integer",
+                        },
+                        nom_categ: {
+                            type: "string",
+                        },
+                    },
+                },
+                CategorieInput: {
+                    type: "object",
+                    properties: {
+                        nom_categ: {
+                            type: "string",
+                        },
+                    },
+                    required: ["nom_categ"], // Indiquez les propriétés requises
+                },
+            },
+        },
+        tags: [
+            // Ajoutez les tags ici
+            {
+                name: "Produit",
+               description: "Opérations liées aux produits"
+            },
+            {
+                name: "Categorie", // Nom du tag pour les auteurs
+                description: "Opérations liées aux catégories",
+            },
+        ],
     },
-    apis: ['src/routes/*.js'] // Je récupère l'enssemble des commentaires swagger venant des fichiers .js du dossier routes
+    apis: ["./routes/*.js"],
 };
-
-const swaggerOptions = swaggerJsDoc(swaggerGeneration);
-
-
 
 
 // ----------------------------------------------
 // Permet de trier dans la documentation par type de requette HTTP
 // ----------------------------------------------
-const swaggerSortByHTTPRequest = {
-    swaggerOptions: {
-        operationsSorter: (httpRequest_first_index, httpRequest_second_index) => {
-            var methodsOrder = ["get", "post", "put", "patch", "delete", "options", "trace"];
-            var result = methodsOrder.indexOf(httpRequest_first_index.get("method")) - methodsOrder.indexOf(httpRequest_second_index.get("method"));
+const specs = swaggerJsdoc(options);
 
-            if (result === 0) {
-                result = httpRequest_first_index.get("path").localeCompare(httpRequest_second_index.get("path"));
-            }
-            return result;
-        }
-    }
-};
+const serveSwagger = swaggerUi.serve;
+const setupSwagger = swaggerUi.setup(specs);
 
-
-
-// ----------------------------------------------
-// ----------------------------------------------
-module.exports = {
-    swaggerOptions,
-    swaggerSortByHTTPRequest
-}
+module.exports = { serveSwagger,setupSwagger};

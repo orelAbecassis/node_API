@@ -1,5 +1,5 @@
 // ----------------------------------------------
-// Instance et appele du model
+// Instance et appele du model pour chaque fonction
 // ----------------------------------------------
 const categorieModel = require('../models/categorie.model');
 
@@ -111,13 +111,13 @@ const deleteCategorie = (req, res) => {
     });
 };
 // ----------------------------------------------
-// Export des fonctions du contrôleur
+// Exportation des fonctions du contrôleur de categorie
 // ----------------------------------------------
 
 module.exports = {
-    getAllCategories,
-    getCategorieById,
-    updateCategorie,
-    createCategorie,
-    deleteCategorie
+    getAllCategories,  // Fonction pour obtenir tous les categories
+    getCategorieById, // Fonction pour obtenir un categorie par son identifiant
+    updateCategorie, // Fonction pour créer un categories
+    createCategorie, // Fonction pour mettre à jour un categoris par son identifiant
+    deleteCategorie // Fonction pour supprimer un categorie par son id
 };

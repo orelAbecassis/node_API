@@ -119,16 +119,14 @@ const deleteProduitId = (req, res) => {
 };
 
 // ----------------------------------------------
-// Export des fonctions du contrôleur
+// Exportation des fonctions du contrôleur de produits
 // ----------------------------------------------
 
-
-
 module.exports = {
-    getAllProduits,
-    getProduitId,
-    createProduit,
-    updateProduitId,
-    deleteProduitId,
+    getAllProduits, // Fonction pour obtenir tous les produits
+    getProduitId,  // Fonction pour obtenir un produit par son identifiant
+    createProduit,  // Fonction pour créer un produit
+    updateProduitId, // Fonction pour mettre à jour un produit par son id
+    deleteProduitId,  // Fonction pour supprimer un produit par son id
 
 }

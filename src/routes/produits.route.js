@@ -1,4 +1,12 @@
+// ----------------------------------------------
+// Importation du module de routage d'Express
+// ----------------------------------------------
+
 const router = require('express').Router();
+
+// ----------------------------------------------
+// Importation des fonctions du contrôleur de catégorie
+// ----------------------------------------------
 
 const {
     getAllProduits,
@@ -8,22 +16,35 @@ const {
     deleteProduitId
 } = require('../controllers/produit.controller');
 
-router.get('/', getAllProduits);
+
+
+// ----------------------------------------------
+//Annotation pour la documentation
+// ----------------------------------------------
 /**
  * @swagger
  * /produits:
  *   get:
+ *     tags:
+ *       - Produit
  *     summary: Récupérer tous les produits.
  *     responses:
  *       200:
  *         description: Succès de la requête avec les produits récupérés.
  */
+// ----------------------------------------------
+// Définition de la route pour obtenir toutes les produits
+// ----------------------------------------------
 
-router.get('/:id', getProduitId);
+router.get('/', getAllProduits);
+
+
 /**
  * @swagger
  * /produits/{id}:
  *   get:
+ *     tags:
+ *       - Produit
  *     summary: Récupérer un produit par ID.
  *     parameters:
  *       - in: path
@@ -39,11 +60,20 @@ router.get('/:id', getProduitId);
  *         description: Le produit avec l'ID spécifié n'a pas été trouvé.
  */
 
-router.post('/', createProduit);
+// ----------------------------------------------
+// Définition de la route pour obtenir une produit
+// ----------------------------------------------
+router.get('/:id', getProduitId);
+
+
+
+
 /**
  * @swagger
  * /produits:
  *   post:
+ *     tags:
+ *       - Produit
  *     summary: Créer un nouveau produit.
  *     requestBody:
  *       required: true
@@ -58,11 +88,17 @@ router.post('/', createProduit);
  *         description: Requête incorrecte, vérifiez les données fournies.
  */
 
-router.put('/:id', updateProduitId);
+// ----------------------------------------------
+// Définition de la route pour créer un produit
+// ----------------------------------------------
+router.post('/', createProduit);
+
 /**
  * @swagger
  * /produits/{id}:
  *   put:
+ *     tags:
+ *       - Produit
  *     summary: Mettre à jour un produit.
  *     parameters:
  *       - in: path
@@ -85,12 +121,18 @@ router.put('/:id', updateProduitId);
  *       404:
  *         description: Le produit avec l'ID spécifié n'a pas été trouvé.
  */
+// ----------------------------------------------
+// Définition de la route pour mettre à jour un produit
+// ----------------------------------------------
+router.put('/:id',updateProduitId );
 
-router.delete('/:id', deleteProduitId);
+
 /**
  * @swagger
  * /produits/{id}:
  *   delete:
+ *     tags:
+ *       - Produit
  *     summary: Supprimer un produit.
  *     parameters:
  *       - in: path
@@ -106,4 +148,13 @@ router.delete('/:id', deleteProduitId);
  *         description: Le produit avec l'ID spécifié n'a pas été trouvé.
  */
 
+// ----------------------------------------------
+// Définition de la route pour supprimer un produit
+// ----------------------------------------------
+router.delete('/:id', deleteProduitId);
+
+
+// ----------------------------------------------
+// Exportation du module de routage
+// ----------------------------------------------
 module.exports = router;

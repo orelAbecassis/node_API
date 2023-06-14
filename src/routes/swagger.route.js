@@ -26,6 +26,4 @@ router.use('/doc', swaggerUi.serve);
 router.get('/doc', swaggerUi.setup(getConfigSwagger.swaggerOptions, getConfigSwagger.swaggerSortByHTTPRequest));
 
 
-// ----------------------------------------------
-// ----------------------------------------------
-module.exports=router;
+module.exports=router; // Exportation du serveur pour une utilisation externe

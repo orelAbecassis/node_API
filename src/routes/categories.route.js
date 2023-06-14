@@ -1,5 +1,12 @@
+// ----------------------------------------------
+// Importation du module de routage d'Express
+// ----------------------------------------------
 
 const router = require('express').Router();
+
+// ----------------------------------------------
+// Importation des fonctions du contrôleur de catégorie
+// ----------------------------------------------
 
 const {
     getAllCategories,
@@ -7,25 +14,35 @@ const {
     updateCategorie,
     createCategorie,
     deleteCategorie
-
 } = require('../controllers/categorie.controller');
 
-
+// ----------------------------------------------
+//Annotation pour la documentation
+// ----------------------------------------------
 /**
  * @swagger
  * /categories:
  *   get:
+ *     tags:
+ *       - Categorie
  *     summary: Récupérer toutes les catégories.
  *     responses:
  *       200:
  *         description: Succès de la requête avec les catégories récupérées.
  */
+
+// ----------------------------------------------
+// Définition de la route pour obtenir toutes les catégories
+// ----------------------------------------------
+
 router.get('/', getAllCategories);
 
 /**
  * @swagger
  * /categories/{id}:
  *   get:
+ *     tags:
+ *       - Categorie
  *     summary: Récupérer une catégorie par ID.
  *     parameters:
  *       - in: path
@@ -40,12 +57,17 @@ router.get('/', getAllCategories);
  *       404:
  *         description: La catégorie avec l'ID spécifié n'a pas été trouvée.
  */
+// ----------------------------------------------
+// Définition de la route pour obtenir une categorie
+// ----------------------------------------------
 router.get('/:id', getCategorieById);
 
 /**
  * @swagger
  * /categories:
  *   post:
+ *     tags:
+ *       - Categorie
  *     summary: Créer une nouvelle catégorie.
  *     requestBody:
  *       required: true
@@ -59,12 +81,17 @@ router.get('/:id', getCategorieById);
  *       400:
  *         description: Requête incorrecte, vérifiez les données fournies.
  */
+// ----------------------------------------------
+// Définition de la route pourcréer une catégorie
+// ----------------------------------------------
 router.post('/', createCategorie);
 
 /**
  * @swagger
  * /categories/{id}:
  *   put:
+ *     tags:
+ *       - Categorie
  *     summary: Mettre à jour une catégorie.
  *     parameters:
  *       - in: path
@@ -87,12 +114,17 @@ router.post('/', createCategorie);
  *       404:
  *         description: La catégorie avec l'ID spécifié n'a pas été trouvée.
  */
+// ----------------------------------------------
+// Définition de la route pour mettre à jour une categorie
+// ----------------------------------------------
 router.put('/:id', updateCategorie);
 
 /**
  * @swagger
  * /categories/{id}:
  *   delete:
+ *     tags:
+ *       - Categorie
  *     summary: Supprimer une catégorie.
  *     parameters:
  *       - in: path
@@ -107,6 +139,14 @@ router.put('/:id', updateCategorie);
  *       404:
  *         description: La catégorie avec l'ID spécifié n'a pas été trouvée.
  */
+// ----------------------------------------------
+// Définition de la route pour supprimer une catégorie
+// ----------------------------------------------
 router.delete('/:id', deleteCategorie);
+
+
+// ----------------------------------------------
+// Exportation du module de routage
+// ----------------------------------------------
 
 module.exports=router;
