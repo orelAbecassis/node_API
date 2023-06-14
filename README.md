@@ -55,7 +55,7 @@ npm start
 La documentation de l'API est générée à l'aide de Swagger et est accessible à l'adresse http://localhost:8081/api/v1/docs. Vous y trouverez les endpoints disponibles ainsi que des exemples de requêtes.
 
 ##Endpoints
-GET /api/v1/produits : Récupérer tous les produits.
+GET /api/v1/produits : Récupérer tous les produits. <br>
 GET /api/v1/produits/{id} : Récupérer un produit par ID.
 POST /api/v1/produits : Créer un nouveau produit.
 PUT /api/v1/produits/{id} : Mettre à jour un produit par ID.
@@ -65,9 +65,6 @@ GET /api/v1/categories/{id} : Récupérer une catégorie par ID.
 POST /api/v1/categories : Créer une nouvelle catégorie.
 PUT /api/v1/categories/{id} : Mettre à jour une catégorie par ID.
 DELETE /api/v1/categories/{id} : Supprimer une catégorie par ID.
-
-##Contribuer
-Les contributions sont les bienvenues ! Si vous souhaitez contribuer à ce projet, n'hésitez pas à ouvrir une issue ou à envoyer une demande de fusion (pull request).
 
 
 
