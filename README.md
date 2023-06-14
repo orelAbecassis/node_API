@@ -43,9 +43,9 @@ PORT=8081
 
 1. Clonez ce dépôt de code sur votre machine locale.
 2. Installez les dépendances en exécutant la commande suivante :
-
 npm install
-##Utilisation
+
+## Utilisation
 1. Lancez l'application en exécutant la commande suivante :
 npm start
 
