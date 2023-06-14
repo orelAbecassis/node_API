@@ -33,7 +33,7 @@ Configuration de la base de donnée
 HOST=127.0.0.1 # De base le port 3306 est préciser
 DB_USER=root
 DB_PASS=
-DB_DATABASE=blognode
+DB_DATABASE=blog1
 
 # Runtime local
 PORT=8081
